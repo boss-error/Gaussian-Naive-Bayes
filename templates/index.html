@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1 class="title">
+        <i class="ri-function-line"></i>
+        Gaussian Naïve Bayes
+    </h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    <i class="ri-error-warning-line"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <form method="POST">
+        <div class="data-input">
+            <!-- Table for input of sentences and labels -->
+            <table id="dataTable" class="data-table">
+                <thead>
+                    <tr>
+                        <th>x1</th>
+                        <th>x2</th>
+                        <th>y (Class)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="x1[]" value="5" class="input-field"></td>
+                        <td><input type="text" name="x2[]" value="3" class="input-field"></td>
+                        <td><input type="text" name="y2[]" value="0" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="x1[]" value="7" class="input-field"></td>
+                        <td><input type="text" name="x2[]" value="2.5" class="input-field"></td>
+                        <td><input type="text" name="y2[]" value="0" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="x1[]" value="6" class="input-field"></td>
+                        <td><input type="text" name="x2[]" value="3.5" class="input-field"></td>
+                        <td><input type="text" name="y2[]" value="0" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="x1[]" value="4" class="input-field"></td>
+                        <td><input type="text" name="x2[]" value="1.5" class="input-field"></td>
+                        <td><input type="text" name="y2[]" value="0" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="x1[]" value="8" class="input-field"></td>
+                        <td><input type="text" name="x2[]" value="1" class="input-field"></td>
+                        <td><input type="text" name="y2[]" value="1" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="x1[]" value="7" class="input-field"></td>
+                        <td><input type="text" name="x2[]" value="9" class="input-field"></td>
+                        <td><input type="text" name="y2[]" value="1" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="x1[]" value="9" class="input-field"></td>
+                        <td><input type="text" name="x2[]" value="2" class="input-field"></td>
+                        <td><input type="text" name="y2[]" value="1" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="x1[]" value="6" class="input-field"></td>
+                        <td><input type="text" name="x2[]" value="8" class="input-field"></td>
+                        <td><input type="text" name="y2[]" value="1" class="input-field"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="input-group">
+                <label for="p1[0]" class="input-label">Enter value for x1 (Prediction):</label>
+                <input type="text" id="p1" name="p1[0]" value="5" class="input-field">
+            </div>
+
+            <div class="input-group">
+                <label for="p2[1]" class="input-label">Enter value for x2 (Prediction):</label>
+                <input type="text" id="p2" name="p2[1]" value="3" class="input-field">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="ri-calculator-line"></i> Predict
+            </button>
+        </div>
+    </form>
+
+    {% if prediction %}
+        <div class="alert alert-success">
+            <i class="ri-check-line"></i> Prediction Result: {{ prediction }}
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function addRow() {
+    const table = document.getElementById("dataTable");
+    const row = table.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    const cell3 = row.insertCell(2);
+    
+    cell1.innerHTML = '<input type="text" name="x1[]" value="New value" class="input-field">';
+    cell2.innerHTML = '<input type="text" name="x2[]" value="New value" class="input-field">';
+    cell3.innerHTML = '<input type="text" name="y2[]" value="New value" class="input-field">';
+}
+
+function deleteRow() {
+    const table = document.getElementById("dataTable");
+    if (table.rows.length > 2) {
+        table.deleteRow(table.rows.length - 1);
+    }
+}
+</script>
+
+{% endblock %}
